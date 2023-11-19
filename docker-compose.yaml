@@ -1,0 +1,40 @@
+version: '3.8'
+name: 'scraping-project'
+services:
+  scrapy:
+    build: 'docker/scrapy'
+    container_name: 'scrapy'
+    volumes:
+    - '.:/app'
+    depends_on:
+    - mongo
+    - mysql
+  mongo:
+    image: mongo:7.0.3
+    container_name: 'mongodb'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      - mongo-data:/data/db
+      - mongo-configdb:/data/configdb
+    depends_on:
+    - mysql  
+  mysql:
+    image: mysql:5.7.44
+    container_name: 'mysql'
+    environment:
+      MYSQL_DATABASE: scraping-db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+volumes:
+  mongo-data:
+  mongo-configdb:
+  mysql-data:
