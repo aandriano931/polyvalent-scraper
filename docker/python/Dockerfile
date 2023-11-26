@@ -2,6 +2,8 @@ FROM python:3.12-slim-bullseye
 
 LABEL author="Arnaud ANDRIANOMANANA"
 
+COPY requirements.txt ./
+
 RUN set -eux; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
@@ -12,12 +14,9 @@ RUN set -eux; \
 		netbase \
 		tzdata \
     && pip install --upgrade pip \
-    && pip install Scrapy===2.11.0 \
-    && pip install scrapy-playwright===0.0.33 \
+	&& pip install --no-cache-dir -r requirements.txt \
 	; \
 	rm -rf /var/lib/apt/lists/*
-
-RUN playwright install chromium
 
 WORKDIR /app
 

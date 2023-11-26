@@ -1,18 +1,37 @@
 version: '3.8'
 name: scraping-project
 services:
-  # Python container with Scrapy
-  scrapy:
-    build: docker/scrapy
-    container_name: scrapy
+
+  # Python container with Selenium
+  python:
+    build: docker/python
+    restart: always
+    container_name: python
+    environment:
+      PYTHON_LOG_LEVEL: "INFO"
+      FT_JOINT_ACC_ID: ${FT_JOINT_ACC_ID}
+      FT_PERSO_ACC_ID: ${FT_PERSO_ACC_ID}
+      FT_USERNAME: ${FT_USERNAME}
+      FT_PASSWORD: ${FT_PASSWORD}
+      MONGO_BANK_DATABASE: ${MONGO_BANK_DATABASE}
+      MONGO_USERNAME: ${MONGO_USERNAME}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_PORT: ${MONGO_PORT}
+      SELENIUM_PASSWORD: ${SELENIUM_PASSWORD}
     volumes:
     - .:/app
-    depends_on:
-    - mongo
-    - mysql
-    networks:
-    - mysql-network
-    - mongo-network
+
+  # Standalone Selenium server with Chrome
+  selenium:
+    shm_size: "2gb"
+    image: selenium/standalone-chrome:119.0
+    restart: always
+    container_name: selenium
+    environment:
+      SE_VNC_PASSWORD: ${SELENIUM_PASSWORD}
+    ports:
+      - 4444:4444
+      - 7900:7900
 
   # MongoDB database for scraped data  
   mongo:
@@ -20,69 +39,12 @@ services:
     restart: always
     container_name: mongo
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongoroot
-      MONGO_INITDB_ROOT_PASSWORD: mongopassword
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     ports:
       - 27017:27017
     volumes:
-      - mongo-data:/data/db
-    networks:
-      - mongo-network
-  
-  # MongoDB GUI to interact with database
-  # mongo-express:
-  #   image: mongo-express:1.0.0-20
-  #   container_name: mongo-express
-  #   restart: always
-  #   ports:
-  #     - 8081:8081
-  #   environment:
-  #     ME_CONFIG_MONGODB_ADMINUSERNAME: mongoroot
-  #     ME_CONFIG_MONGODB_ADMINPASSWORD: mongopassword
-  #     ME_CONFIG_MONGODB_URL: mongodb://mongoroot:mongopassword@mongo:27017/ # Temporary for development
-  #   depends_on:
-  #     - mongo
-  #   networks:
-  #     - mongo-network
-  
-  # MySQL Database
-  mysql:
-    image: mysql:5.7.44
-    restart: always
-    container_name: mysql
-    environment:
-      MYSQL_DATABASE: scraping-db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - 3307:3306
-    expose:
-      - 3306
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - mysql-network
-
-  # phpmyadmin GUI for mysql     
-  phpmyadmin:
-    image: phpmyadmin:5.2.1
-    restart: always
-    container_name: phpmyadmin
-    ports:
-      - 8090:80
-    environment:
-      PMA_HOST: mysql
-      MYSQL_ROOT_PASSWORD: password
-    depends_on:
-      - mysql
-    networks:
-      - mysql-network
+      - ./mongo-data:/data/db
 
 volumes:
   mongo-data:
-  mysql-data:
-
-networks:
-  mysql-network:
-  mongo-network:
