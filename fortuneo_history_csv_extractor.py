@@ -1,7 +1,5 @@
 import csv
-import logging
-import sys
-from dao.BankDAO import BankDAO
+from dao.BankMysqlDAO import BankMysqlDAO
 from datetime import datetime
 from dto.BankTransactionDTO import BankTransactionDTO
 from tool.LoggingToolBox import LoggingToolBox
@@ -39,5 +37,5 @@ fortuneo_history_file_path = './data_source/file/full_historique_compte_joint.cs
 transactions = transform_csv_to_dto(fortuneo_history_file_path)
 transactions.sort(key=lambda x: x.operation_date)
 
-fortuneo_dao = BankDAO('fortuneo_joint_account_data'); 
+fortuneo_dao = BankMysqlDAO('home-hub'); 
 fortuneo_dao.insert_many(transactions)

@@ -1,8 +1,11 @@
 import os
 from dao.MongoDAO import MongoDAO
+import logging
 import pymongo  
+import datetime
+import pytz
 
-class BankDAO(MongoDAO):
+class BankMongoDAO(MongoDAO):
     
     def __init__(self, collection_name):
         mongo_database = os.getenv("MONGO_BANK_DATABASE")

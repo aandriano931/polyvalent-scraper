@@ -1,5 +1,6 @@
-# Docker data
+# Database data
 mongo-data/
+mysql-data/
 
 #One shots
 data_source/

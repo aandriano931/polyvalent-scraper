@@ -17,6 +17,9 @@ services:
       MONGO_USERNAME: ${MONGO_USERNAME}
       MONGO_PASSWORD: ${MONGO_PASSWORD}
       MONGO_PORT: ${MONGO_PORT}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       SELENIUM_PASSWORD: ${SELENIUM_PASSWORD}
     volumes:
     - .:/app
@@ -34,17 +37,49 @@ services:
       - 7900:7900
 
   # MongoDB database for scraped data  
-  mongo:
-    image: mongo:7.0.3
+  # mongo:
+  #   image: mongo:7.0.3
+  #   restart: always
+  #   container_name: mongo
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+  #     MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - ./mongo-data:/data/db
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.2.0
     restart: always
-    container_name: mongo
+    container_name: mysql
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MYSQL_DATABASE: home-hub
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: 'Europe/Paris'
     ports:
-      - 27017:27017
+      - 3307:3306
+    expose:
+      - 3306
     volumes:
-      - ./mongo-data:/data/db
+      - ./mysql-data:/var/lib/mysql
+
+  # phpmyadmin GUI for mysql     
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    restart: always
+    container_name: phpmyadmin
+    ports:
+      - 8090:80
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    depends_on:
+      - mysql
 
 volumes:
   mongo-data:
+  mysql-data:

@@ -1,7 +1,4 @@
-import logging
 import os
-import pytz
-from datetime import datetime
 from pymongo import MongoClient
 
 class MongoDAO:
