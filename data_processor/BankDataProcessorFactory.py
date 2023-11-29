@@ -1,4 +1,4 @@
-from dao.BankMysqlDAO import BankMysqlDAO
+from dao.BankTransactionDAO import BankTransactionDAO
 from data_transformer.FortuneoDataTransformer import FortuneoDataTransformer
 from scraper.FortuneoScraper import FortuneoScraper
 
@@ -21,7 +21,7 @@ class BankDataProcessorFactory:
     def create_dao(banking_account):
         # Return the appropriate DAO based on the collection name
         if banking_account == "joint_account":
-            return BankMysqlDAO("fortuneo_joint_account_data")
+            return BankTransactionDAO("fortuneo_joint_account")
         if banking_account == "personal_account":
-            return BankMysqlDAO("fortuneo_personal_account_data")
+            return BankTransactionDAO("fortuneo_personal_account")
         # Add more cases for other DAOs if needed

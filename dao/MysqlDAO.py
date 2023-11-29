@@ -4,13 +4,13 @@ import logging
 
 class MysqlDAO:
     
-    def __init__(self, mysql_database=None):
+    def __init__(self):
         self.set_logger()
         config = {
             "host": "mysql",
             "user": os.getenv("MYSQL_USER"),
             "password": os.getenv("MYSQL_PASSWORD"),
-            "database": mysql_database,
+            "database": 'home-hub',
         }
         self.mysql_connection = self.connect_to_mysql(config)
 
