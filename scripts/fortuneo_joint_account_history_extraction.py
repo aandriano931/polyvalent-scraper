@@ -2,7 +2,6 @@ import csv
 from dao.BankTransactionDAO import BankTransactionDAO
 from datetime import datetime
 from dto.BankTransactionDTO import BankTransactionDTO
-from tool.LoggingToolBox import LoggingToolBox
 
 def transform_csv_to_dto(csv_file_path):
     transactions = []
@@ -31,11 +30,12 @@ def transform_csv_to_dto(csv_file_path):
 
     return transactions
 
-LoggingToolBox.set_logger()
-
-fortuneo_history_file_path = './data_source/file/full_historique_compte_joint.csv'
-transactions = transform_csv_to_dto(fortuneo_history_file_path)
-transactions.sort(key=lambda x: x.operation_date)
-
-fortuneo_dao = BankTransactionDAO('fortuneo_joint_account') 
-fortuneo_dao.insert_many(transactions)
+def main():
+    fortuneo_history_file_path = './data_source/file/full_historique_compte_joint.csv'
+    transactions = transform_csv_to_dto(fortuneo_history_file_path)
+    transactions.sort(key=lambda x: x.operation_date)
+    fortuneo_dao = BankTransactionDAO('fortuneo_joint_account') 
+    fortuneo_dao.insert_many(transactions)
+    
+if __name__ == "__main__":
+    main()
