@@ -4,7 +4,8 @@ services:
 
   # Python container with Selenium
   python:
-    build: docker/python
+    build:
+      target: production
     restart: always
     container_name: python
     environment:
