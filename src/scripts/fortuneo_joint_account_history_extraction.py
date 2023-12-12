@@ -1,7 +1,7 @@
 import csv
-from dao.BankTransactionDAO import BankTransactionDAO
+from src.dao.BankTransactionDAO import BankTransactionDAO
 from datetime import datetime
-from dto.BankTransactionDTO import BankTransactionDTO
+from src.dto.BankTransactionDTO import BankTransactionDTO
 
 def transform_csv_to_dto(csv_file_path):
     transactions = []

@@ -1,4 +1,4 @@
-from data_processor.FortuneoDailyDataProcessor import FortuneoDailyDataProcessor
+from src.data_processor.FortuneoDailyDataProcessor import FortuneoDailyDataProcessor
 
 def main():
     # Process the joint account

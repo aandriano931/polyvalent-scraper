@@ -1,5 +1,5 @@
 from datetime import datetime
-from dto.BankTransactionDTO import BankTransactionDTO
+from src.dto.BankTransactionDTO import BankTransactionDTO
 
 class FortuneoDataTransformer:
 

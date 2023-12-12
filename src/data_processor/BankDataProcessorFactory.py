@@ -1,6 +1,6 @@
-from dao.BankTransactionDAO import BankTransactionDAO
-from data_transformer.FortuneoDataTransformer import FortuneoDataTransformer
-from scraper.FortuneoScraper import FortuneoScraper
+from src.dao.BankTransactionDAO import BankTransactionDAO
+from src.data_transformer.FortuneoDataTransformer import FortuneoDataTransformer
+from src.scraper.FortuneoScraper import FortuneoScraper
 
 class BankDataProcessorFactory:
     @staticmethod
