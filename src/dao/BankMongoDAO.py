@@ -1,5 +1,5 @@
 import os
-from dao.MongoDAO import MongoDAO
+from src.dao.MongoDAO import MongoDAO
 import logging
 import pymongo  
 import datetime

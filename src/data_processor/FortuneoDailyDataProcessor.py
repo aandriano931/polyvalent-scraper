@@ -1,4 +1,4 @@
-from data_processor.BankDataProcessorFactory import BankDataProcessorFactory
+from src.data_processor.BankDataProcessorFactory import BankDataProcessorFactory
 
 class FortuneoDailyDataProcessor:
     @staticmethod

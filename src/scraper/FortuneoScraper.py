@@ -1,7 +1,7 @@
 import logging
 import os
-from tool.Base64ToolBox import Base64ToolBox as b64
-from tool.SeleniumBrowser import SeleniumBrowser
+from src.tool.Base64ToolBox import Base64ToolBox as b64
+from src.tool.SeleniumBrowser import SeleniumBrowser
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC

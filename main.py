@@ -1,5 +1,5 @@
 import sys
-from scripts import fortuneo_joint_account_history_extraction, fortuneo_joint_account_scraper, fortuneo_personal_account_scraper
+from src.scripts import fortuneo_joint_account_history_extraction, fortuneo_joint_account_scraper, fortuneo_personal_account_scraper
 
 def main():
     if len(sys.argv) != 2:
