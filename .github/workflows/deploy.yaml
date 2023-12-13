@@ -18,6 +18,8 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       - name: connect to server and get into working directory
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }}"
+      - name: where am i
+        run: pwd  
       - name: pull last code version
         run: "git checkout ${{ secrets.MAIN_BRANCH }} && git pull"
       - name: update docker containers
