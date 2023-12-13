@@ -2,6 +2,7 @@ import logging
 import os
 from src.tool.Base64ToolBox import Base64ToolBox as b64
 from src.tool.SeleniumBrowser import SeleniumBrowser
+from src.tool.Logger import Logger
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,13 +27,14 @@ class FortuneoScraper:
         
     def scrap_account_daily_data(self):
         try:
+            logger = Logger.get_logger()
             self.handle_cookies_popup()
             self.login()
             self.display_account(self.banking_account)
             yesterday = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
             self.display_account_events_by_dates(yesterday, yesterday)
             data = self.get_account_events_data()
-            logging.info("Daily scraped Fortuneo banking events: %s for account: %s", data, self.banking_account)
+            logger.info("Daily scraped Fortuneo banking events: %s for account: %s", data, self.banking_account)
             return data
         finally:
             self.browser.quit()
@@ -83,10 +85,10 @@ class FortuneoScraper:
                 cells = row.find_all(['th', 'td'])
                 row_data = [cell.get_text(strip=True) for cell in cells]
                 table_data.append(row_data)
-                
+            
+            self.browser.switch_to.default_content()
             return table_data
         else:
-            logging.warning("Could not find table with banking data")
-        self.browser.switch_to.default_content()
+            raise ValueError("Could not find table with banking data")
     
             

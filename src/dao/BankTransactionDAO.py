@@ -1,5 +1,7 @@
 from src.dao.MysqlDAO import MysqlDAO
 from src.dao.BankAccountDAO import BankAccountDAO
+from src.tool.Logger import Logger
+
 import uuid
 
 class BankTransactionDAO(MysqlDAO):
@@ -10,6 +12,7 @@ class BankTransactionDAO(MysqlDAO):
         super().__init__()
     
     def insert_one(self, dto_object):
+        logger = Logger.get_logger()
         bank_account_dao = BankAccountDAO()
         bank_account_id = bank_account_dao.get_one_by_alias(self.bank_account_alias)
         cursor = self.mysql_connection.cursor()
@@ -33,10 +36,11 @@ class BankTransactionDAO(MysqlDAO):
         self.mysql_connection.commit()
         cursor.close()
         self.close_connection()
-        self.__class__.logger.info(f"Inserted one bank transaction with ID: {inserted_id}")
+        logger.info(f"Inserted one bank transaction with ID: {inserted_id}")
         return inserted_id
     
     def insert_many(self, dto_collection):
+        logger = Logger.get_logger()
         bank_account_dao = BankAccountDAO()
         bank_account_id = bank_account_dao.get_one_by_alias(self.bank_account_alias)
         cursor = self.mysql_connection.cursor()
@@ -61,5 +65,5 @@ class BankTransactionDAO(MysqlDAO):
         self.mysql_connection.commit()
         cursor.close()
         self.close_connection()
-        self.__class__.logger.info(f"Inserted {len(inserted_ids)} bank transactions with IDs: {inserted_ids}")
+        logger.info(f"Inserted {len(inserted_ids)} bank transactions with IDs: {inserted_ids}")
         return inserted_ids
