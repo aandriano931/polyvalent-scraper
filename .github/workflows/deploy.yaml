@@ -16,13 +16,7 @@ jobs:
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-      - name: connect to server and get into working directory
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }}"
-      - name: where am i
-        run: pwd  
-      - name: pull last code version
-        run: "git checkout ${{ secrets.MAIN_BRANCH }} && git pull"
-      - name: update docker containers
-        run: "docker compose up -d && exit"
+      - name: connect to server and update code
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && docker compose up -d && exit"
       - name: cleanup
         run: rm -rf ~/.ssh
