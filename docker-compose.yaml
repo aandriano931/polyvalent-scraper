@@ -4,6 +4,7 @@ services:
 
   # Python container with Selenium
   python:
+    build: .
     restart: always
     container_name: python
     environment:
