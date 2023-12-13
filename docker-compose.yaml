@@ -4,8 +4,6 @@ services:
 
   # Python container with Selenium
   python:
-    build:
-      target: production
     restart: always
     container_name: python
     environment:
@@ -20,6 +18,8 @@ services:
       SELENIUM_PASSWORD: ${SELENIUM_PASSWORD}
     networks:
       - home-hub_net
+    volumes:
+      - .:/app
 
   # Standalone Selenium server with Chrome
   selenium:
