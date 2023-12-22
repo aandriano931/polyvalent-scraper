@@ -25,16 +25,17 @@ class FortuneoScraper:
         self.banking_account = banking_account
         self.wait = WebDriverWait(self.browser, 2)
         
-    def scrap_account_daily_data(self):
+    def scrap_account_data(self, date_delta):
         try:
             logger = Logger.get_logger()
             self.handle_cookies_popup()
             self.login()
             self.display_account(self.banking_account)
-            yesterday = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
-            self.display_account_events_by_dates(yesterday, yesterday)
+            start_date = (datetime.now() - timedelta(days=date_delta)).strftime("%d/%m/%Y")
+            end_date = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
+            self.display_account_events_by_dates(start_date, end_date)
             data = self.get_account_events_data()
-            logger.info("Daily scraped Fortuneo banking events: %s for account: %s", data, self.banking_account)
+            logger.info("Fortuneo banking events scraped for the last %s day(s): %s for account: %s", date_delta, data, self.banking_account)
             return data
         finally:
             self.browser.quit()
