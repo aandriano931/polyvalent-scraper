@@ -59,8 +59,8 @@ jobs:
       - name: Connect to server and update code
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && exit"
       
-      - name: Connect to server and rebuild containers
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose up -d && exit"
+      - name: Connect to server, login to github and rebuild containers
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && echo $CR_PAT | docker login ghcr.io -u aandriano -p ${{ secrets.GITHUB_TOKEN }} && docker compose up -d && exit"
         
       - name: Cleanup
         run: rm -rf ~/.ssh

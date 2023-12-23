@@ -4,7 +4,7 @@ services:
 
   # Python container with Selenium
   python:
-    build: .
+    image: ghcr.io/aandriano931/polyvalent-scraper:latest
     restart: always
     container_name: python
     environment:
