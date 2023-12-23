@@ -67,3 +67,23 @@ class BankTransactionDAO(MysqlDAO):
         self.close_connection()
         logger.info(f"Inserted {len(inserted_ids)} bank transactions with IDs: {inserted_ids}")
         return inserted_ids
+    
+    def get_all(self, categorized):
+        logger = Logger.get_logger()
+        cursor = self.mysql_connection.cursor()
+        get_all_categorized_transactions_query = ("SELECT bank_transaction.id, operation_date, label, debit, credit, bank_category_id, bank_category.name FROM {} INNER JOIN bank_category ON bank_category.id = bank_transaction.bank_category_id ORDER BY operation_date ASC".format(self.table))
+        get_non_categorized_transactions_query = ("SELECT bank_transaction.id, operation_date, label, debit, credit FROM {} WHERE bank_category_id IS NULL ORDER BY operation_date ASC".format(self.table))
+        if categorized == True:
+            query = get_all_categorized_transactions_query
+        else:
+            query = get_non_categorized_transactions_query    
+        cursor.execute(query)
+        results = cursor.fetchall()
+        cursor.close()
+        self.close_connection()
+        if (results):
+            transactions_number = len(results)
+            logger.info(f"Queried {transactions_number} transactions.")
+            return results
+        else:
+            return None

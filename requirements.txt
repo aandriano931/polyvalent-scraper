@@ -4,3 +4,12 @@ pymongo
 python-dotenv
 pytz
 selenium
+numpy
+pandas
+nltk
+matplotlib
+torch
+torchvision 
+torchaudio 
+sentence-transformers
+scikit-learn

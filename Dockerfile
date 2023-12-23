@@ -1,6 +1,8 @@
-FROM python:3.12-slim-bullseye
+FROM python:3.10.6-slim-bullseye
 
 LABEL author="Arnaud ANDRIANOMANANA"
+LABEL org.opencontainers.image.source=https://github.com/aandriano931/polyvalent-scraper
+LABEL org.opencontainers.image.description="Python image for scraping and llm"
 
 COPY requirements.txt ./
 
