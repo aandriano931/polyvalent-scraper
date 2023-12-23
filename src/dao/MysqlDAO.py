@@ -38,6 +38,9 @@ class MysqlDAO:
                 time.sleep(delay ** attempt)
                 attempt += 1
         return None
-    
+
+    def commit(self):
+        self.mysql_connection.commit()
+        
     def close_connection(self):
         self.mysql_connection.close()

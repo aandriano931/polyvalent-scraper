@@ -11,6 +11,7 @@ RUN set -eux; \
 	apt-get install -y --no-install-recommends \
 		ca-certificates \
         curl \
+		iputils-ping \
         libxml2-dev \
         libxslt-dev \
 		netbase \

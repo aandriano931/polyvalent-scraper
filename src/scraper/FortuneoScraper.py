@@ -25,7 +25,7 @@ class FortuneoScraper:
         self.banking_account = banking_account
         self.wait = WebDriverWait(self.browser, 2)
         
-    def scrap_account_data(self, date_delta):
+    def scrape_account_data(self, date_delta):
         try:
             logger = Logger.get_logger()
             self.handle_cookies_popup()

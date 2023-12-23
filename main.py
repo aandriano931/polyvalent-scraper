@@ -28,7 +28,7 @@ def main():
         send_error_notification(error_message)         
 
 def send_error_notification(error_message):
-    if os.getenv("LOG_PATH") == "true":
+    if os.getenv("ENABLE_MAIL") == "true":
         mailer = Mailer()
         subject = "Error Notification"
         mailer.send_notification_email(subject, error_message)

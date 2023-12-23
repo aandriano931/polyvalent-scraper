@@ -24,6 +24,8 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       SMTP_PORT: ${SMTP_PORT}
       LOG_PATH: ${LOG_PATH}
+    ports:
+      - "25:25"
     networks:
       - home-hub_net
     volumes:

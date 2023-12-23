@@ -9,7 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 class BankCategoryGuesser:
 
-    HIGH_RELIABILITY_THRESHOLD = 0.90
+    HIGH_RELIABILITY_THRESHOLD = 0.95
 
     def __init__(self):
         nltk.download('punkt')
@@ -21,18 +21,27 @@ class BankCategoryGuesser:
             self.model = SentenceTransformer(model_path)
 
     def apply_bert_embedding(self, dataframe):
-        bert_input = self.get_llm_cleaned_data_from_df(dataframe, 'label')
+        bert_input = self.get_llm_cleaned_data_from_df(dataframe)
         embeddings = self.model.encode(bert_input, show_progress_bar = True)
         return np.array(embeddings)
     
-    def get_llm_cleaned_data_from_df(self, dataframe, dataframe_column):
-        raw_data = dataframe[dataframe_column]
+    def add_transaction_type_to_label(self, row):
+        if pd.notna(row['debit']):
+            return f"{row['label']} debit"
+        elif pd.notna(row['credit']):
+            return f"{row['label']} credit"
+        else:
+            return row['label']
+    
+    def get_llm_cleaned_data_from_df(self, dataframe):
+        dataframe['modified_label'] = dataframe.apply(self.add_transaction_type_to_label, axis=1)
+        raw_data = dataframe['modified_label']
         cleaned_data = raw_data.apply(lambda x: self.clean_text_for_llm(x))
         return cleaned_data.tolist()
     
     def clean_text_for_llm(self, raw_text):
         text = raw_text.lower()
-        text = re.sub(r'[^\w\s]|https?://\S+|www\.\S+|https?:/\S+|[^\x00-\x7F]+|cesson sevigne|\d+', '', str(text).strip())
+        text = re.sub(r'[^\w\s]|https?://\S+|www\.\S+|https?:/\S+|[^\x00-\x7F]+|\d+', '', str(text).strip())
         text_list = word_tokenize(text)
         return ' '.join(text_list)
    

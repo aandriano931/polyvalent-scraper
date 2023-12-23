@@ -1,10 +1,11 @@
 # polyvalent-scraper
-Polyvalent scraper to extract data, postprocess it and insert it in a mongoDB database
+Polyvalent scraper to extract data, postprocess it and insert it in a MySQL database
 
 Working fonctionnalities:
 - Crawl bank website and extract transactions data
 - Insert transactions into a MySQL database
 - Use a BERT LLM to guess the appropriate categories for the inserted transactions
+- Update the transactions without a category with the guessed categories
 - Email notification in case of failure
 
 Next steps:

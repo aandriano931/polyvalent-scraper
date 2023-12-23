@@ -25,3 +25,24 @@ class Mailer:
         text = msg.as_string()
         server.sendmail(self.sender_email, self.receiver_email, text)
         server.quit()
+        
+    def send_notification_email_with_dataframe(self, subject, message, dataframe_array=[]):
+        msg = MIMEMultipart()
+        msg["From"] = self.sender_email
+        msg["To"] = self.receiver_email
+        msg["Subject"] = subject
+        body = message
+        msg.attach(MIMEText(body, "plain"))
+        
+        if len(dataframe_array) > 0:
+            for dataframe in dataframe_array:
+                html = dataframe.to_html(index=False)
+                part = MIMEText(html, "html")
+                msg.attach(part)
+            
+        server = smtplib.SMTP(self.smtp_server, self.smtp_port)
+        server.starttls()
+        server.login(self.sender_email, self.email_password)
+        text = msg.as_string()
+        server.sendmail(self.sender_email, self.receiver_email, text)
+        server.quit()
