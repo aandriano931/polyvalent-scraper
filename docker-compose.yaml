@@ -23,11 +23,12 @@ services:
       SMTP_SERVER: ${SMTP_SERVER}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       SMTP_PORT: ${SMTP_PORT}
-      LOG_PATH: ${LOG_PATH}
+      LOG_DIR: ${LOG_DIR}
     networks:
       - home-hub_net
     volumes:
       - .:/app
+      - ${LOG_DIR}:/var/log
 
   # Standalone Selenium server with Chrome
   selenium:

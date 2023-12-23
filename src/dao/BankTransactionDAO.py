@@ -12,7 +12,7 @@ class BankTransactionDAO(MysqlDAO):
         super().__init__()
     
     def insert_one(self, dto_object):
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         bank_account_dao = BankAccountDAO()
         bank_account_id = bank_account_dao.get_one_by_alias(self.bank_account_alias)
         cursor = self.mysql_connection.cursor()
@@ -40,7 +40,7 @@ class BankTransactionDAO(MysqlDAO):
         return inserted_id
     
     def insert_many(self, dto_collection):
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         bank_account_dao = BankAccountDAO()
         bank_account_id = bank_account_dao.get_one_by_alias(self.bank_account_alias)
         cursor = self.mysql_connection.cursor()
@@ -69,7 +69,7 @@ class BankTransactionDAO(MysqlDAO):
         return inserted_ids
     
     def get_all(self, categorized):
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         cursor = self.mysql_connection.cursor()
         get_all_categorized_transactions_query = ("SELECT bank_transaction.id, operation_date, label, debit, credit, bank_category_id, bank_category.name FROM {} INNER JOIN bank_category ON bank_category.id = bank_transaction.bank_category_id ORDER BY operation_date ASC".format(self.table))
         get_non_categorized_transactions_query = ("SELECT bank_transaction.id, operation_date, label, debit, credit FROM {} WHERE bank_category_id IS NULL ORDER BY operation_date DESC LIMIT 10".format(self.table))
@@ -89,7 +89,7 @@ class BankTransactionDAO(MysqlDAO):
             return None
         
     def update_transactions_categories_from_df(self, dataframe):
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         cursor = self.mysql_connection.cursor()
         updated_ids = []
         for index, row in dataframe.iterrows():

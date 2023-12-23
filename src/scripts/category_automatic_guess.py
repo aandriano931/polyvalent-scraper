@@ -24,16 +24,16 @@ def send_notification(dataframe_array):
         message = "Categories were newly assigned to bank transactions. Information is provided in the table below"
         mailer.send_notification_email_with_dataframe(subject, message, dataframe_array)
     else:
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         logger.info('Updated transactions with guessed categories from BERT LLM')
-        logger.info('\t'+ dataframe.to_string().replace('\n', '\n\t'))
+        logger.info('\t'+ dataframe_array[0].to_string().replace('\n', '\n\t'))
 
 def main():
     # get training and guessing data and apply BERT embedding to it
     df_training_transactions = get_transactions_df(True)
     df_guessing_transactions = get_transactions_df(False)
     if df_guessing_transactions.empty:
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         logger.info('There is 0 transaction without a category.')
     else:   
         # prepare data for LLM guessing
@@ -60,7 +60,7 @@ def main():
             'transaction_id': df_matching_guessing_transactions['id'],
             'category_id': df_matching_training_transactions['category_id'],
         })
-        # update_transactions_categories(update_categories_df)
+        update_transactions_categories(update_categories_df)
         
         success_summary_df = pd.DataFrame({
             'Guessing Transaction ID': df_matching_guessing_transactions['id'],

@@ -4,8 +4,8 @@ import logging
 class Logger:
    
     @staticmethod   
-    def get_logger():
-        logger = logging.getLogger()
+    def get_logger(name):
+        logger = logging.getLogger(name)
         logger.setLevel(logging.INFO)
         if not logger.handlers:
             formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -14,7 +14,7 @@ class Logger:
             handler.setFormatter(formatter)
             logger.addHandler(handler)
             # Also log to a file
-            file_handler = logging.FileHandler(os.getenv("LOG_PATH"))
+            file_handler = logging.FileHandler('/var/log/scraper.log')
             file_handler.setFormatter(formatter)
             logger.addHandler(file_handler)
                 

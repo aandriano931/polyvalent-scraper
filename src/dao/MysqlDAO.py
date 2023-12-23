@@ -17,7 +17,7 @@ class MysqlDAO:
         self.mysql_connection = self.connect_to_mysql(config)
 
     def connect_to_mysql(self, config, attempts=3, delay=2):
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         attempt = 1
         # Implement a reconnection routine
         while attempt < attempts + 1:

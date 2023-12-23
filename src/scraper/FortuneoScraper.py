@@ -27,7 +27,7 @@ class FortuneoScraper:
         
     def scrape_account_data(self, date_delta):
         try:
-            logger = Logger.get_logger()
+            logger = Logger.get_logger(__name__)
             self.handle_cookies_popup()
             self.login()
             self.display_account(self.banking_account)

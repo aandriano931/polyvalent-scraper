@@ -4,7 +4,7 @@ from src.tool.Logger import Logger
 class FortuneoDataProcessor:
     @staticmethod
     def process_bank_data(banking_account, date_delta):
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         scraper = BankDataProcessorFactory.create_scraper(banking_account)
         data_to_export = scraper.scrape_account_data(date_delta)
         if data_to_export is not None:

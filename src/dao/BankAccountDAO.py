@@ -8,7 +8,7 @@ class BankAccountDAO(MysqlDAO):
         super().__init__()
             
     def get_one_by_alias(self, bank_account_alias):
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         cursor = self.mysql_connection.cursor()
         get_account_by_alias_query = ("SELECT id FROM {} WHERE alias = %s LIMIT 1".format(self.table))
         get_account_by_alias_parameters = (bank_account_alias,)

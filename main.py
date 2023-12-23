@@ -33,7 +33,7 @@ def send_error_notification(error_message):
         subject = "Error Notification"
         mailer.send_notification_email(subject, error_message)
     else:
-        logger = Logger.get_logger()
+        logger = Logger.get_logger(__name__)
         logger.error('%s', error_message)    
 
 if __name__ == "__main__":
