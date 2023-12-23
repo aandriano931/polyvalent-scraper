@@ -30,7 +30,7 @@ def main():
 def send_error_notification(error_message):
     if os.getenv("ENABLE_MAIL") == "true":
         mailer = Mailer()
-        subject = "Error Notification"
+        subject = "Error Notification (Polyvalent Scraper)"
         mailer.send_notification_email(subject, error_message)
     else:
         logger = Logger.get_logger(__name__)
