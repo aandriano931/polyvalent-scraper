@@ -72,7 +72,7 @@ class BankTransactionDAO(MysqlDAO):
         logger = Logger.get_logger(__name__)
         cursor = self.mysql_connection.cursor()
         get_all_categorized_transactions_query = ("SELECT bank_transaction.id, operation_date, label, debit, credit, bank_category_id, bank_category.name FROM {} INNER JOIN bank_category ON bank_category.id = bank_transaction.bank_category_id ORDER BY operation_date ASC".format(self.table))
-        get_non_categorized_transactions_query = ("SELECT bank_transaction.id, operation_date, label, debit, credit FROM {} WHERE bank_category_id IS NULL ORDER BY operation_date DESC LIMIT 10".format(self.table))
+        get_non_categorized_transactions_query = ("SELECT bank_transaction.id, operation_date, label, debit, credit FROM {} WHERE bank_category_id IS NULL ORDER BY operation_date ASC".format(self.table))
         if categorized == True:
             query = get_all_categorized_transactions_query
         else:
@@ -86,7 +86,7 @@ class BankTransactionDAO(MysqlDAO):
             logger.info(f"Queried {transactions_number} transactions.")
             return results
         else:
-            return None
+            return []
         
     def update_transactions_categories_from_df(self, dataframe):
         logger = Logger.get_logger(__name__)

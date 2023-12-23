@@ -21,12 +21,14 @@ def send_notification(dataframe_array):
     if os.getenv("ENABLE_MAIL") == "true":
         mailer = Mailer()
         subject = "New category assignements"
-        message = "Categories were newly assigned to bank transactions. Information is provided in the table below"
+        message = "Categories were newly assigned to bank transactions. Information is provided in the tables below"
         mailer.send_notification_email_with_dataframe(subject, message, dataframe_array)
     else:
         logger = Logger.get_logger(__name__)
-        logger.info('Updated transactions with guessed categories from BERT LLM')
+        logger.info('Successfully updated these transactions with guessed categories from BERT LLM')
         logger.info('\t'+ dataframe_array[0].to_string().replace('\n', '\n\t'))
+        logger.warning('Failed to update these transactions')
+        logger.warning('\t'+ dataframe_array[1].to_string().replace('\n', '\n\t'))
 
 def main():
     # get training and guessing data and apply BERT embedding to it
@@ -56,25 +58,32 @@ def main():
         df_matching_training_transactions = df_training_transactions.iloc[similarity_index, :].reset_index(drop = True)
 
         # update transactions categories
-        update_categories_df = pd.DataFrame({
+        df_update_categories = pd.DataFrame({
             'transaction_id': df_matching_guessing_transactions['id'],
             'category_id': df_matching_training_transactions['category_id'],
         })
-        update_transactions_categories(update_categories_df)
+        update_transactions_categories(df_update_categories)
         
-        success_summary_df = pd.DataFrame({
+        # generate summary dataframes and log or send them by email
+        df_success_summary = pd.DataFrame({
             'Guessing Transaction ID': df_matching_guessing_transactions['id'],
             'Guessing Transaction label': df_matching_guessing_transactions['label'],
             'Assigned category': df_matching_training_transactions['category'],
             'Matching score' : similarity_scores,
         })
         
-        fail_summary_df = pd.DataFrame({
+        df_fail_summary = pd.DataFrame({
             'Failed Guessing Transaction ID': df_non_matching_guessing_transactions['id'],
             'Failed Guessing Transaction label': df_non_matching_guessing_transactions['label'],
         })
         
-        send_notification([success_summary_df, fail_summary_df])   
+        array_dataframes = []
+        if not df_success_summary.empty:       
+            array_dataframes.append(df_success_summary)
+        if not df_fail_summary.empty:       
+            array_dataframes.append(df_fail_summary)
+
+        send_notification([df_success_summary, df_fail_summary])   
         
 if __name__ == "__main__":
     main()
