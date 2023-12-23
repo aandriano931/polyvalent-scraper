@@ -4,11 +4,6 @@ on:
   push:
     tags:
       - 'v*'
-    paths:
-      - 'Dockerfile'
-      - 'requirements.txt'
-      - 'docker-entrypoint.sh'  
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
