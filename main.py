@@ -1,7 +1,7 @@
 import os
 import sys
-from src.data_processor.FortuneoDataProcessor import FortuneoDataProcessor
-from src.scripts import category_automatic_guess, fortuneo_joint_account_history_extraction
+from src.data_processor.FtnDataProcessor import FtnDataProcessor
+from src.scripts import category_automatic_guess, ftn_joint_account_history_extraction
 from src.tool.Mailer import Mailer
 from src.tool.Logger import Logger
 
@@ -14,11 +14,11 @@ def main():
     
     try:
         if action == "ftn_joint_scrape":
-            FortuneoDataProcessor.process_bank_data("joint_account", date_delta)
+            FtnDataProcessor.process_bank_data("joint_account", date_delta)
         elif action == "ftn_joint_history":
-            fortuneo_joint_account_history_extraction.main()
+            ftn_joint_account_history_extraction.main()
         elif action == "ftn_perso_scrape":
-            FortuneoDataProcessor.process_bank_data("personal_account", date_delta)
+            FtnDataProcessor.process_bank_data("personal_account", date_delta)
         elif action == "guess_category":
             category_automatic_guess.main()  
         else:

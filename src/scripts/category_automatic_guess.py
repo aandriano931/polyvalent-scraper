@@ -8,13 +8,13 @@ from src.tool.Logger import Logger
 COLUMNS = ['id', 'operation_date', 'label', 'debit', 'credit', 'category_id', 'category']
 
 def get_transactions_df(categorized):
-    bank_transaction_dao = BankTransactionDAO('fortuneo_joint_account')
+    bank_transaction_dao = BankTransactionDAO('ftn_joint_account')
     results = bank_transaction_dao.get_all(categorized)
     transactions = [dict(zip(COLUMNS, result)) for result in results]
     return pd.DataFrame(transactions)
 
 def update_transactions_categories(dataframe):
-    bank_transaction_dao = BankTransactionDAO('fortuneo_joint_account')
+    bank_transaction_dao = BankTransactionDAO('ftn_joint_account')
     bank_transaction_dao.update_transactions_categories_from_df(dataframe)   
     
 def send_notification(dataframe_array):

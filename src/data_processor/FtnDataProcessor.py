@@ -1,7 +1,7 @@
 from src.data_processor.BankDataProcessorFactory import BankDataProcessorFactory
 from src.tool.Logger import Logger
 
-class FortuneoDataProcessor:
+class FtnDataProcessor:
     @staticmethod
     def process_bank_data(banking_account, date_delta):
         logger = Logger.get_logger(__name__)

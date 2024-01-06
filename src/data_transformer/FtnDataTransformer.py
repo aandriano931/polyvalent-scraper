@@ -1,7 +1,7 @@
 from datetime import datetime
 from src.dto.BankTransactionDTO import BankTransactionDTO
 
-class FortuneoDataTransformer:
+class FtnDataTransformer:
 
     def transform_collection(self, raw_data_collection):
         transformed_data_list = []

@@ -1,4 +1,5 @@
 import csv
+import os
 from src.dao.BankTransactionDAO import BankTransactionDAO
 from datetime import datetime
 from src.dto.BankTransactionDTO import BankTransactionDTO
@@ -19,23 +20,23 @@ def transform_csv_to_dto(csv_file_path):
             credit = float(row['Crédit'].replace(',', '.')) if row['Crédit'] else None
             amount = -debit if debit else credit
             transaction_type = "debit" if debit else "credit"
-            fortuneo_dto = BankTransactionDTO(
+            ftn_dto = BankTransactionDTO(
                 amount=amount,
                 label=label,
                 operation_date=operation_date,
                 transaction_type=transaction_type,
                 value_date=value_date
             )
-            transactions.append(fortuneo_dto)
+            transactions.append(ftn_dto)
 
     return transactions
 
 def main():
-    fortuneo_history_file_path = './data_source/file/full_historique_compte_joint.csv'
-    transactions = transform_csv_to_dto(fortuneo_history_file_path)
+    ftn_history_file_path = os.getenv("FT_HISTORY_FILE_PATH")
+    transactions = transform_csv_to_dto(ftn_history_file_path)
     transactions.sort(key=lambda x: x.operation_date)
-    fortuneo_dao = BankTransactionDAO('fortuneo_joint_account') 
-    fortuneo_dao.insert_many(transactions)
+    ftn_dao = BankTransactionDAO('ftn_joint_account') 
+    ftn_dao.insert_many(transactions)
     
 if __name__ == "__main__":
     main()

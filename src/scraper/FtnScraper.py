@@ -1,4 +1,3 @@
-import logging
 import os
 from src.tool.Base64ToolBox import Base64ToolBox as b64
 from src.tool.SeleniumBrowser import SeleniumBrowser
@@ -10,9 +9,9 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from time import sleep
 
-class FortuneoScraper:
+class FtnScraper:
     
-    ENTRYPOINT_URL = "https://mabanque.fortuneo.fr/fr/identification.jsp"
+    ENTRYPOINT_URL = os.getenv("FT_ENTRYPOINT_URL")
     ACCOUNTS_LINKS = {
         "joint_account" : os.getenv("FT_JOINT_ACC_ID"),
         "personal_account" : os.getenv("FT_PERSO_ACC_ID"),
@@ -35,7 +34,7 @@ class FortuneoScraper:
             end_date = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
             self.display_account_events_by_dates(start_date, end_date)
             data = self.get_account_events_data()
-            logger.info("Fortuneo banking events scraped for the last %s day(s): %s for account: %s", date_delta, data, self.banking_account)
+            logger.info("Ftn banking events scraped for the last %s day(s): %s for account: %s", date_delta, data, self.banking_account)
             return data
         finally:
             self.browser.quit()
