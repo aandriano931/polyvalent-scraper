@@ -8,7 +8,7 @@ class FtnDataTransformer:
         for raw_data in raw_data_collection:
             operation_date_str = raw_data[1]
             value_date_str = raw_data[2]
-            label = raw_data[3]
+            label = raw_data[3][:250]
             if raw_data[4]:
                 amount_str = raw_data[4]
             else:
