@@ -1,4 +1,5 @@
 import os
+from src.exceptions.NoTransactionException import NoTransactionException
 from src.tool.Base64ToolBox import Base64ToolBox as b64
 from src.tool.SeleniumBrowser import SeleniumBrowser
 from src.tool.Logger import Logger
@@ -9,6 +10,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from time import sleep
 
+
 class FtnScraper:
     
     ENTRYPOINT_URL = os.getenv("FT_ENTRYPOINT_URL")
@@ -16,6 +18,9 @@ class FtnScraper:
         "joint_account" : os.getenv("FT_JOINT_ACC_ID"),
         "personal_account" : os.getenv("FT_PERSO_ACC_ID"),
     }
+    
+    class NoTransactionsError(Exception):
+        pass
     
     def __init__(self, banking_account):
         browser = SeleniumBrowser()
@@ -76,19 +81,23 @@ class FtnScraper:
         self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, "iframe_centrale")))
         page_source = self.browser.page_source
         soup = BeautifulSoup(page_source, 'html.parser')
-        events_tab = soup.find('table', id="tabHistoriqueOperations")
-        if events_tab:
-            # Do not keep headers
-            rows = events_tab.find_all('tr')[1:]
-            table_data = []
-            for row in rows:
-                cells = row.find_all(['th', 'td'])
-                row_data = [cell.get_text(strip=True) for cell in cells]
-                table_data.append(row_data)
-            
-            self.browser.switch_to.default_content()
-            return table_data
+        form_result_container = soup.find('div', id="resultatsConsultation")
+        if form_result_container:
+            events_tab = soup.find('table', id="tabHistoriqueOperations")
+            if events_tab:
+                # Do not keep headers
+                rows = events_tab.find_all('tr')[1:]
+                table_data = []
+                for row in rows:
+                    cells = row.find_all(['th', 'td'])
+                    row_data = [cell.get_text(strip=True) for cell in cells]
+                    table_data.append(row_data)
+                
+                self.browser.switch_to.default_content()
+                return table_data
+            else:
+                raise NoTransactionException("There wasn't any registered transactions yesterday.")
         else:
-            raise ValueError("Could not find table with banking data")
+            raise ValueError("Something is wrong with the result page.")
     
             

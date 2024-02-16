@@ -13,7 +13,7 @@ guess_category:
 	docker exec -it python python main.py guess_category
 
 start:
-	docker compose up
+	docker compose up -d
 
 stop:
 	docker compose down --remove-orphans
