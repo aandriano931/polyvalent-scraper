@@ -15,7 +15,7 @@ class FtnDataTransformer:
                 amount_str = raw_data[5]
             operation_date = datetime.strptime(operation_date_str, '%d/%m/%Y').date()
             value_date = datetime.strptime(value_date_str, '%d/%m/%Y').date()
-            amount = float(amount_str)
+            amount = float(amount_str.replace(',', ''))
             transaction_type = "debit" if amount < 0 else "credit"
             amount = abs(amount)
             transformed_data = BankTransactionDTO(
