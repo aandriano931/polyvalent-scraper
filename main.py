@@ -1,7 +1,7 @@
 import os
 import sys
 from src.data_processor.FtnDataProcessor import FtnDataProcessor
-from src.scripts import category_automatic_guess, ftn_joint_account_history_extraction
+from src.scripts import category_automatic_guess, ftn_joint_account_history_extraction, ftn_personal_account_history_extraction
 from src.tool.Mailer import Mailer
 from src.tool.Logger import Logger
 from src.exceptions.NoTransactionException import NoTransactionException
@@ -20,6 +20,8 @@ def main():
             ftn_joint_account_history_extraction.main()
         elif action == "ftn_perso_scrape":
             FtnDataProcessor.process_bank_data("personal_account", date_delta)
+        elif action == "ftn_perso_history":
+            ftn_personal_account_history_extraction.main()
         elif action == "guess_category":
             category_automatic_guess.main()  
         else:
