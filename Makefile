@@ -9,6 +9,9 @@ ftn_joint_history:
 ftn_perso_scrape:
 	docker exec -it python python main.py ftn_perso_scrape $(INTERVAL)
 
+ftn_perso_history:
+	docker exec -it python python main.py ftn_perso_history
+
 guess_category:
 	docker exec -it python python main.py guess_category
 
