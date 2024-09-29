@@ -8,8 +8,11 @@ from src.tool.Logger import Logger
 COLUMNS = ['id', 'operation_date', 'label', 'debit', 'credit', 'category_id', 'category']
 
 def get_transactions_df(categorized):
-    bank_transaction_dao = BankTransactionDAO('ftn_joint_account')
-    results = bank_transaction_dao.get_all(categorized)
+    join_bank_transaction_dao = BankTransactionDAO('ftn_joint_account')
+    personal_bank_transaction_dao = BankTransactionDAO('ftn_personal_account')
+    join_results = join_bank_transaction_dao.get_all(categorized)
+    personal_results = personal_bank_transaction_dao.get_all(categorized)
+    results = join_results + personal_results
     transactions = [dict(zip(COLUMNS, result)) for result in results]
     return pd.DataFrame(transactions)
 
