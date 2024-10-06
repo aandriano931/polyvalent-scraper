@@ -15,6 +15,12 @@ ftn_perso_history:
 guess_category:
 	docker exec -it python python main.py guess_category
 
+cntrl_scrape_corolla:
+	docker exec -it python python main.py cntrl_scrape_corolla
+
+sptc_scrape_corolla:
+	docker exec -it python python main.py sptc_scrape_corolla
+
 start:
 	docker compose up -d
 
