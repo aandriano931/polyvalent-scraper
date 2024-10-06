@@ -8,6 +8,9 @@ class SptcDataProcessor:
         scraper = CarDataProcessorFactory.create_scraper('sptc')
         data_to_export = scraper.scrape_car_data(car_model)
         if data_to_export is not None:
-            logger.info(data_to_export)                
+            transformer = CarDataProcessorFactory.create_transformer('sptc')
+            transformed_data = transformer.transform_collection(data_to_export)
+            dao = CarDataProcessorFactory.create_dao()
+            dao.insert_many(transformed_data)                    
         else:
             logger.info("Nothing to import.")

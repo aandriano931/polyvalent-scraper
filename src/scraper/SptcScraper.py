@@ -48,7 +48,7 @@ class SptcScraper:
         soup = BeautifulSoup(page_source, 'html.parser')
         car_offers_result_container = soup.find('div', id="vo-results-search")
         if car_offers_result_container:
-            car_offers_containers = car_offers_result_container.find_all('div', class_='reskin-product-card')
+            car_offers_containers = car_offers_result_container.find_all('div', class_='item-selection', attrs={'data-vo-id': True})
             car_data = []
             for offer_container in car_offers_containers:
                 car_info = self.extract_car_info(offer_container)
