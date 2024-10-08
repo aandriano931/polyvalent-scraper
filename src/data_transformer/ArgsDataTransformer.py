@@ -1,6 +1,6 @@
 from src.dto.CarOfferDTO import CarOfferDTO
 
-class SptcDataTransformer:
+class ArgsDataTransformer:
 
     def transform_collection(self, raw_data_collection):
         transformed_data_list = []

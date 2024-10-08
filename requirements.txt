@@ -13,3 +13,4 @@ torchvision
 torchaudio 
 sentence-transformers
 scikit-learn
+selenium-stealth

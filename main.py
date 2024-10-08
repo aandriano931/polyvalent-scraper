@@ -1,8 +1,8 @@
 import os
 import sys
 from src.data_processor.FtnDataProcessor import FtnDataProcessor
-from src.data_processor.CntrlDataProcessor import CntrlDataProcessor
 from src.data_processor.SptcDataProcessor import SptcDataProcessor
+from src.data_processor.ArgsDataProcessor import ArgsDataProcessor
 from src.scripts import category_automatic_guess, ftn_joint_account_history_extraction, ftn_personal_account_history_extraction
 from src.tool.Mailer import Mailer
 from src.tool.Logger import Logger
@@ -26,12 +26,12 @@ def main():
             ftn_personal_account_history_extraction.main()
         elif action == "guess_category":
             category_automatic_guess.main()  
-        elif action == "cntrl_scrape_corolla":
-            CntrlDataProcessor.process_car_data('corolla', {})
         elif action == "sptc_scrape_corolla":
             SptcDataProcessor.process_car_data('corolla')    
+        elif action == "args_scrape_corolla":
+            ArgsDataProcessor.process_car_data('corolla')    
         else:
-            print("Invalid action. Supported actions: ftn_joint_scrape, ftn_perso_scrape, ftn_joint_history, guess_category, ctrln_scrape_corolla, sptc_scrape_corolla")
+            print("Invalid action. Supported actions: ftn_joint_scrape, ftn_perso_scrape, ftn_joint_history, guess_category, args_scrape_corolla, sptc_scrape_corolla")
     except NoTransactionException as e:
         send_info_notification(str(e))
     except ValueError as e:
