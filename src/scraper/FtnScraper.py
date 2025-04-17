@@ -51,9 +51,10 @@ class FtnScraper:
             privacy_button.click()
             
     def login(self):
-        username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id='loginContainer']/input[1]")))
+        username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id='LOGIN']")))
         username_input.send_keys(b64.decode(os.getenv("FT_USERNAME")))
-        password_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id='passwordContainer']/span[1]/input")))
+        
+        password_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id='PASSWD']")))
         password_input.send_keys(b64.decode(os.getenv("FT_PASSWORD")))
         connect_button = self.browser.find_element(By.ID, 'valider_login')
         connect_button.click()
