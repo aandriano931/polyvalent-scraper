@@ -8,14 +8,30 @@ services:
     restart: always
     container_name: python
     environment:
+      - FT_JOINT_ACC_ID=${FT_JOINT_ACC_ID}
+      - FT_PERSO_ACC_ID=${FT_PERSO_ACC_ID}
+      - FT_USERNAME=${FT_USERNAME}
+      - FT_PASSWORD=${FT_PASSWORD}
+      - FT_ENTRYPOINT_URL=${FT_ENTRYPOINT_URL}
       - ARGS_ENTRYPOINT_URL=
       - SPTC_ENTRYPOINT_URL=
       - FT_JOINT_HISTORY_FILE_PATH=./data_source/file/full_historique_compte_joint.csv
       - FT_PERSONAL_HISTORY_FILE_PATH=./data_source/file/full_historique_compte_perso.csv
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MONGODB_USER=${MONGODB_USER}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - SELENIUM_PASSWORD=${SELENIUM_PASSWORD}
       - ENABLE_MAIL=true
+      - MAIL_RECIPIENT=${MAIL_RECIPIENT}
+      - MAIL_SENDER=${MAIL_SENDER}
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_PORT=25
       - LOG_DIR=./var/log
       - TZ=Europe/Paris
+      
     networks:
       - home-hub_net
     volumes:
