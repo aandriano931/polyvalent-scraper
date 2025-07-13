@@ -8,30 +8,14 @@ services:
     restart: always
     container_name: python
     environment:
-      - PYTHON_LOG_LEVEL
-      - FT_JOINT_ACC_ID
-      - FT_PERSO_ACC_ID
-      - FT_USERNAME
-      - FT_PASSWORD
-      - FT_ENTRYPOINT_URL
-      - ARGS_ENTRYPOINT_URL
-      - SPTC_ENTRYPOINT_URL
-      - FT_JOINT_HISTORY_FILE_PATH
-      - FT_PERSONAL_HISTORY_FILE_PATH
-      - MYSQL_USER
-      - MYSQL_PASSWORD
-      - MONGODB_USER
-      - MONGODB_PASSWORD
-      - MYSQL_ROOT_PASSWORD
-      - SELENIUM_PASSWORD
-      - ENABLE_MAIL
-      - MAIL_RECIPIENT
-      - MAIL_SENDER
-      - SMTP_SERVER
-      - SMTP_PASSWORD
-      - SMTP_PORT
-      - LOG_DIR
-      - TZ
+      - ARGS_ENTRYPOINT_URL=
+      - SPTC_ENTRYPOINT_URL=
+      - FT_JOINT_HISTORY_FILE_PATH=./data_source/file/full_historique_compte_joint.csv
+      - FT_PERSONAL_HISTORY_FILE_PATH=./data_source/file/full_historique_compte_perso.csv
+      - ENABLE_MAIL=true
+      - SMTP_PORT=25
+      - LOG_DIR=./var/log
+      - TZ=Europe/Paris
     networks:
       - home-hub_net
     volumes:

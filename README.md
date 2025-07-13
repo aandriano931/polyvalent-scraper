@@ -16,3 +16,6 @@ Can also use machine learning to guess data categorization
 - Add a crawler for another bank
 - Extend the crawling to other type of data (energy consumption?)
 - Improve logging & monitoring?
+
+### Security:
+- Secrets are encrypted with GPG and managed using sops (.env.enc).
