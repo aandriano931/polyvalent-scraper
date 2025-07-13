@@ -34,22 +34,22 @@ jobs:
 
     - name: Upload .env to server
       run: |
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'cat > ${{ secrets.WORK_DIR }}/.env' <<EOF
-        SELENIUM_PASSWORD=${{ secrets.SELENIUM_PASSWORD }}
-        FT_ENTRYPOINT_URL=${{ secrets.FT_ENTRYPOINT_URL }}
-        FT_USERNAME=${{ secrets.FT_USERNAME }}
-        FT_PASSWORD=${{ secrets.FT_PASSWORD }}
-        FT_JOINT_ACC_ID=${{ secrets.FT_JOINT_ACC_ID }}
-        FT_PERSO_ACC_ID=${{ secrets.FT_PERSO_ACC_ID }}
-        MYSQL_USER=${{ secrets.MYSQL_USER }}
-        MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
-        MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
-        MONGODB_USER=${{ secrets.MONGODB_USER }}
-        MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}
-        MAIL_RECIPIENT=${{ secrets.MAIL_RECIPIENT }}
-        MAIL_SENDER=${{ secrets.MAIL_SENDER }}
-        SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
-        SMTP_SERVER=${{ secrets.SMTP_SERVER }}
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'cat > ${{ secrets.WORK_DIR }}/.env' << "EOF"
+        SELENIUM_PASSWORD="${{ secrets.SELENIUM_PASSWORD }}"
+        FT_ENTRYPOINT_URL="${{ secrets.FT_ENTRYPOINT_URL }}"
+        FT_USERNAME="${{ secrets.FT_USERNAME }}"
+        FT_PASSWORD="${{ secrets.FT_PASSWORD }}"
+        FT_JOINT_ACC_ID="${{ secrets.FT_JOINT_ACC_ID }}"
+        FT_PERSO_ACC_ID="${{ secrets.FT_PERSO_ACC_ID }}"
+        MYSQL_USER="${{ secrets.MYSQL_USER }}"
+        MYSQL_PASSWORD="${{ secrets.MYSQL_PASSWORD }}"
+        MYSQL_ROOT_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}"
+        MONGODB_USER="${{ secrets.MONGODB_USER }}"
+        MONGODB_PASSWORD="${{ secrets.MONGODB_PASSWORD }}"
+        MAIL_RECIPIENT="${{ secrets.MAIL_RECIPIENT }}"
+        MAIL_SENDER="${{ secrets.MAIL_SENDER }}"
+        SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}"
+        SMTP_SERVER="${{ secrets.SMTP_SERVER }}"
         EOF
 
     - name: Build and start containers
