@@ -20,7 +20,7 @@ services:
       - home-hub_net
     volumes:
       - .:/app
-      - ${LOG_DIR}:/var/log
+      - ./var/log:/var/log
 
   # Standalone Selenium server with Chrome
   selenium:
