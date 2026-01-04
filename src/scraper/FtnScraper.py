@@ -59,10 +59,12 @@ class FtnScraper:
         connect_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Connexion')]")))
         connect_button.click()
         sleep(5)
-        
-    def display_account(self, account_name):
-        account_link = self.wait.until(EC.element_to_be_clickable((By.ID, self.ACCOUNTS_LINKS[account_name])))
-        account_link.click()
+               
+    def display_account(self, account_id):
+        target_selector = f"a[id='{account_id}_ss_menu_type_cpt_consulter_solde']"
+        account_link = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, target_selector)))
+        self.browser.execute_script("arguments[0].click();", account_link)
+
         
     def display_account_events_by_dates(self, start_date, end_date):
         self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, "iframe_centrale")))
