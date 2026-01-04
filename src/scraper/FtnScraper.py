@@ -61,7 +61,8 @@ class FtnScraper:
         sleep(5)
                
     def display_account(self, account_id):
-        target_selector = f"a[id='{account_id}_ss_menu_type_cpt_consulter_solde']"
+        partial_account_link = self.ACCOUNTS_LINKS[account_id]
+        target_selector = f"a[id='{partial_account_link}_ss_menu_type_cpt_consulter_solde']"
         account_link = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, target_selector)))
         self.browser.execute_script("arguments[0].click();", account_link)
 
