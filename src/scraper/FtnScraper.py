@@ -59,15 +59,8 @@ class FtnScraper:
         connect_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Connexion')]")))
         connect_button.click()
         sleep(5)
-               
-    def display_account(self, account_id):
-        partial_account_link = self.ACCOUNTS_LINKS[account_id]
-        target_selector = f"a[id='{partial_account_link}_ss_menu_type_cpt_consulter_solde']"
-        account_link = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, target_selector)))
-        self.browser.execute_script("arguments[0].click();", account_link)
         
     def display_account(self, account_hash):
-        base_url = "https://votrebanque.fr/fr/prive/mes-comptes/compte-courant/consulter-situation/consulter-solde.jsp"
         target_url = self.ACCOUNTS_LINKS[account_hash]
         self.browser.get(target_url)
 
