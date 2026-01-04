@@ -41,7 +41,7 @@ services:
   # Standalone Selenium server with Chrome
   selenium:
     shm_size: "2gb"
-    image: selenium/standalone-chrome:119.0
+    image: selenium/standalone-chrome:143.0
     restart: always
     container_name: selenium
     environment:
