@@ -13,11 +13,11 @@ def transform_csv_to_dto(csv_file_path):
             if reader.line_num == 1:
                 continue
                     
-            operation_date = datetime.strptime(row['Date operation'], '%d/%m/%Y').date()
+            operation_date = datetime.strptime(row['Date opération'], '%d/%m/%Y').date()
             value_date = datetime.strptime(row['Date valeur'], '%d/%m/%Y').date()
-            label = row['libelle']
-            debit = float(row['Debit'].replace(',', '.')) if row['Debit'] else None
-            credit = float(row['Credit'].replace(',', '.')) if row['Credit'] else None
+            label = row['libellé']
+            debit = float(row['Débit'].replace(',', '.')) if row['Débit'] else None
+            credit = float(row['Crédit'].replace(',', '.')) if row['Crédit'] else None
             amount = -debit if debit else credit
             transaction_type = "debit" if debit else "credit"
             ftn_dto = BankTransactionDTO(
